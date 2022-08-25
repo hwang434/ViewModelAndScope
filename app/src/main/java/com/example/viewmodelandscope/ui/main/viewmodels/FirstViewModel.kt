@@ -20,9 +20,11 @@ class FirstViewModel(application: Application) : AndroidViewModel(application) {
         Log.d(TAG,"MainViewModel - onCleared() called")
         super.onCleared()
     }
-    
+
+    // 4초에 딜레이가 있는 네트워크 작업.
     fun doNetworkThing() {
         Log.d(TAG,"MainViewModel - doNetworkThing() called")
+        // 뷰모델의 onCleared()가 불리기 전까지 계속 진행 된다.
         viewModelScope.launch(Dispatchers.IO) {
             delay(4000)
             withContext(Dispatchers.Main) {

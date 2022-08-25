@@ -32,8 +32,10 @@ class FirstFragment : Fragment() {
         return binding.root
     }
 
+    // 이벤트를 설정.
     private fun setEvent() {
         Log.d(TAG,"FirstFragment - setEvent() called")
+        // 버튼을 누르면 4초에 딜레이가 걸리는 네트워크 작업을 실행.
         binding.buttonDoNetwrodk.setOnClickListener {
             viewModel.doNetworkThing()
         }
