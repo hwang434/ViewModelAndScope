@@ -1,6 +1,5 @@
 package com.example.viewmodelandscope.ui.main.views
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.lifecycleScope
 import com.example.viewmodelandscope.R
 import com.example.viewmodelandscope.databinding.FragmentFirstBinding
 import com.example.viewmodelandscope.ui.main.viewmodels.FirstViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FirstFragment : Fragment() {
 
@@ -40,13 +40,14 @@ class FirstFragment : Fragment() {
         // 버튼을 누르면 4초에 딜레이가 걸리는 네트워크 작업을 실행.
         binding.buttonDoNetwrodk.setOnClickListener {
             doNetworkJob()
-            clearTheViewModelStore()
         }
     }
 
     // 시간이 4초 걸리는 네트워크 작업
     private fun doNetworkJob() {
-        viewModel.doNetworkThing()
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.doNetworkThing()
+        }
     }
 
     // 프래그먼트에 종속 되는 뷰모델들을 clear.

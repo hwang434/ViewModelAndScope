@@ -24,15 +24,14 @@ class FirstViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     // 4초에 딜레이가 있는 네트워크 작업.
-    fun doNetworkThing() {
+    suspend fun doNetworkThing() {
         Log.d(TAG,"MainViewModel - doNetworkThing() called")
         // 뷰모델의 onCleared()가 불리기 전까지 계속 진행 된다.
-        viewModelScope.launch(Dispatchers.IO) {
-            delay(5000)
-            withContext(Dispatchers.Main) {
-                Toast.makeText(getApplication(), "Network job is done!", Toast.LENGTH_SHORT).show()
-            }
-            Log.d(TAG,"MainViewModel - doNetworkThing() end")
+        delay(5000)
+        withContext(Dispatchers.Main) {
+            Toast.makeText(getApplication(), "Network job is done!", Toast.LENGTH_SHORT).show()
         }
+
+        Log.d(TAG,"MainViewModel - doNetworkThing() end")
     }
 }
